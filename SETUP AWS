@@ -1,0 +1,31 @@
+Go to AWS Console → Search for S3
+
+Click “Create bucket”
+
+Enter a unique bucket name (e.g., salesforce-file-storage)
+
+Choose a region (e.g., Asia Pacific (Mumbai))// WE CAN CHANGE BASED ON OUR CREATIVITY
+
+Uncheck “Block all public access” (optional if private integration)
+
+Click Create Bucket
+
+
+///////////////////////////////////////////////////////////////////////////////////
+Go to AWS Console → Search IAM
+
+Create a new User:
+
+User name: salesforce-s3-user
+
+Access type: Programmatic access
+
+Attach AmazonS3FullAccess or custom policy (limited scope)
+
+Save the:
+
+Access Key ID
+
+Secret Access Key
+
+////////////////////////////////////////////////////////////////////////////////////////////////
