@@ -1,0 +1,35 @@
+Use Apex + Named Credentials + HTTP Callout
+Step 1: Create Named Credential
+Setup → Named Credentials
+Add:Label: AWS_S3/URL: https://s3.amazonaws.com
+Authentication: None (use in Apex manually)
+
+APEX CLASS SETUP
+public class S3Uploader {
+    public static void uploadFileToS3(String base64Body, String fileName) {
+        String bucketName = 'your-bucket-name';
+        String awsKey = 'your-access-key';
+        String awsSecret = 'your-secret-key';
+        String region = 'ap-south-1'; // for Mumbai
+
+        String host = bucketName + '.s3.' + region + '.amazonaws.com';
+        String url = 'https://' + host + '/' + fileName;
+
+        HttpRequest req = new HttpRequest();
+        req.setEndpoint(url);
+        req.setMethod('PUT');
+        req.setHeader('Content-Type', 'application/octet-stream');
+        req.setHeader('Host', host);
+        req.setHeader('x-amz-acl', 'public-read'); // optional
+
+        // Decode the base64 file body
+        Blob body = EncodingUtil.base64Decode(base64Body);
+        req.setBodyAsBlob(body);
+
+        // Sign with AWS Signature V4 (use an external service or custom Apex signer)
+
+        Http http = new Http();
+        HTTPResponse res = http.send(req);
+        System.debug('Status: ' + res.getStatus());
+    }
+}
